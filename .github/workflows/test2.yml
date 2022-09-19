@@ -10,17 +10,15 @@ on:
 jobs:
   version:
     runs-on: ubuntu-latest
-  steps:
-    - shell: bash
-      name: Create Release Tag for configuration
-      id: create-release
-      run: |
-
-        if [[ -z "${{ inputs.service-version }}" ]];
-        then
-          SERVICE_VERSION=$(jq -r .serviceVersion ./version.json ./package.json)
-          echo "No service-version ${SERVICE_VERSION}"
-        else
-          SERVICE_VERSION=${{ inputs.service-version }}
-          echo "With service-version ${SERVICE_VERSION}"
-        fi
+    steps:
+      - uses: actions/checkout@v3
+      - name: get-npm-version
+        run: |
+          if [[ -z "${{ inputs.service-version }}" ]];
+          then
+            SERVICE_VERSION=$(jq -r .serviceVersion ./version.json ./package.json)
+            echo "No service-version ${SERVICE_VERSION}"
+          else
+            SERVICE_VERSION=${{ inputs.service-version }}
+            echo "With service-version ${SERVICE_VERSION}"
+            fi

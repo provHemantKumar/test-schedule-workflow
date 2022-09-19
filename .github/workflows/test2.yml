@@ -1,0 +1,26 @@
+name: Bump and create Release Tag
+description: 'Bump and create Release Tag'
+
+inputs:
+  service-version:
+    description: Update the version.
+    required: false
+on:
+  workflow_dispatch:
+jobs:
+  version:
+    runs-on: ubuntu-latest
+  steps:
+    - shell: bash
+      name: Create Release Tag for configuration
+      id: create-release
+      run: |
+
+        if [[ -z "${{ inputs.service-version }}" ]];
+        then
+          SERVICE_VERSION=$(jq -r .serviceVersion ./version.json ./package.json)
+          echo "No service-version ${SERVICE_VERSION}"
+        else
+          SERVICE_VERSION=${{ inputs.service-version }}
+          echo "With service-version ${SERVICE_VERSION}"
+        fi

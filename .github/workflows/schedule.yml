@@ -25,7 +25,7 @@ on:
 
 jobs:
   print_text:
-    runs-on: 'ubuntu-20.04'
+    runs-on: ['ubuntu-20.04']
     steps:
       - name: Set the variables
         env:
@@ -35,7 +35,7 @@ jobs:
         run: |
           echo "MESSAGE=${{ github.event.inputs.text_to_print || env.DEFAULT_MESSAGE }}" >> $GITHUB_ENV
           echo "COLOR=${{ github.event.inputs.color || env.DEFAULT_COLOR }}" >> $GITHUB_ENV
-          echo $RUNNER_GROUP | sed -r 's/ubuntu-([^-]+)-.*/\1/'
+          echo "$RUNNER_GROUP" | sed -r 's/ubuntu-([^-]+)-.*/\1/'
       - name: Print some text
         run: echo Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz
         

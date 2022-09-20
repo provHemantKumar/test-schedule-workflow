@@ -31,6 +31,7 @@ jobs:
         env:
           DEFAULT_MESSAGE: 'dev' # here is the default message
           DEFAULT_COLOR: 'blue'
+        shell: bash
         run: |
           echo "MESSAGE=${{ github.event.inputs.text_to_print || env.DEFAULT_MESSAGE }}" >> $GITHUB_ENV
           echo "COLOR=${{ github.event.inputs.color || env.DEFAULT_COLOR }}" >> $GITHUB_ENV

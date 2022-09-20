@@ -12,7 +12,7 @@ on:
           - dev
           - int
           - uat
-        default: 'prod'
+        default: 'dev'
       color:
         description: 'Select the cluster color.'
         required: true
@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: Set the variables
         env:
-          DEFAULT_MESSAGE: 'dev' # here is the default message
+          DEFAULT_MESSAGE: 'prod' # here is the default message
           DEFAULT_COLOR: 'blue'
         shell: bash
         run: |

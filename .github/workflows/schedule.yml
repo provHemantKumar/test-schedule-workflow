@@ -21,6 +21,8 @@ on:
           - blue
           - green
         default: 'blue'
+env:
+  TIER: Monday
 
 jobs:
   print_text:
@@ -34,6 +36,22 @@ jobs:
         run: |
           echo "MESSAGE=${{ github.event.inputs.text_to_print || env.DEFAULT_MESSAGE }}" >> $GITHUB_ENV
           echo "COLOR=${{ github.event.inputs.color || env.DEFAULT_COLOR }}" >> $GITHUB_ENV
+          echo $TIER
+      - name: Print some text
+        run: echo Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz
+        
+  print_text1:
+    runs-on: ['ubuntu-20.04']
+    steps:
+      - name: Set the variables2
+        env:
+          DEFAULT_MESSAGE: 'prod2' # here is the default message
+          DEFAULT_COLOR: 'blue'
+        shell: bash
+        run: |
+          echo "MESSAGE=${{ github.event.inputs.text_to_print || env.DEFAULT_MESSAGE }}" >> $GITHUB_ENV
+          echo "COLOR=${{ github.event.inputs.color || env.DEFAULT_COLOR }}" >> $GITHUB_ENV
+          echo 2 $TIER
       - name: Print some text
         run: echo Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz
         

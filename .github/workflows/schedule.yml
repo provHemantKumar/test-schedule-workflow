@@ -36,8 +36,8 @@ jobs:
         run: |
           echo "MESSAGE=${{ github.event.inputs.text_to_print || env.DEFAULT_MESSAGE }}"
           echo "COLOR=${{ github.event.inputs.color || env.DEFAULT_COLOR }}"
+          echo tier $TIER and message $MESSAGE
           echo "Step 1 Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz"
-          echo $TIER
       - name: Print some text step 2 
         run: |
           echo "step 2 Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz"

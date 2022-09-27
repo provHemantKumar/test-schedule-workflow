@@ -26,7 +26,7 @@ env:
 
 jobs:
   print_text:
-    runs-on: ['ubuntu-20.04', "${{ github.event.inputs.text_to_print || github.env.DEFAULT_MESSAGE }}"]
+    runs-on: ['ubuntu-20.04', "${{ github.event.inputs.text_to_print || env.DEFAULT_MESSAGE }}"]
     steps:
       - name: Set the variables
         env:

@@ -57,6 +57,6 @@ jobs:
           echo 2 $TIER
       - name: Print some text
         run: |
-          "echo Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz"
-          "echo default in step 2 Kolkata red error -n kolkata consistent --hyd abc-$DEFAULT_MESSAGE-$DEFAULT_COLOR-xyz"
+          echo "Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz"
+          echo "default in step 2 Kolkata red error -n kolkata consistent --hyd abc-$DEFAULT_MESSAGE-$DEFAULT_COLOR-xyz"
         

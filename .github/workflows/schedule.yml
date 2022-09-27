@@ -33,7 +33,8 @@ jobs:
           DEFAULT_MESSAGE: 'prod' # here is the default message
           DEFAULT_COLOR: 'blue'
         run: |
-          echo "MESSAGE=${{ github.event.inputs.text_to_print || env.DEFAULT_MESSAGE }}" >> $GITHUB_ENV
+          MESSAGE=${{ github.event.inputs.text_to_print || env.DEFAULT_MESSAGE }}
+          #echo "MESSAGE=${{ github.event.inputs.text_to_print || env.DEFAULT_MESSAGE }}" >> $GITHUB_ENV
           echo COLOR=${{ github.event.inputs.color || env.DEFAULT_COLOR }} >> $GITHUB_ENV
           echo tier ${MESSAGE}  ${TIER} and message 
           echo "Step 1 Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz"

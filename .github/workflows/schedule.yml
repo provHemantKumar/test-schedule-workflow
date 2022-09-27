@@ -34,11 +34,12 @@ jobs:
           DEFAULT_COLOR: 'blue'
         shell: bash
         run: |
-          echo "MESSAGE=${{ github.event.inputs.text_to_print || env.DEFAULT_MESSAGE }}" >> $GITHUB_ENV
-          echo "COLOR=${{ github.event.inputs.color || env.DEFAULT_COLOR }}" >> $GITHUB_ENV
+          echo MESSAGE=${{ github.event.inputs.text_to_print || env.DEFAULT_MESSAGE }} >> $GITHUB_ENV
+          echo COLOR=${{ github.event.inputs.color || env.DEFAULT_COLOR }} >> $GITHUB_ENV
           echo tier $MESSAGE  $TIER and message 
           echo "Step 1 Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz"
           echo "default  --hyd abc-$DEFAULT_MESSAGE-$DEFAULT_COLOR-xyz"
+          
       - name: Print some text step 2 
         run: |
           echo step 2 Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz-  "${{ github.env.DEFAULT_MESSAGE }}"

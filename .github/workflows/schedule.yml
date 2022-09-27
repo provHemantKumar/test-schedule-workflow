@@ -26,7 +26,7 @@ env:
 
 jobs:
   print_text:
-    runs-on: ['ubuntu-20.04', "${{ github.event.inputs.text_to_print || github.env.DEFAULT_MESSAGE }}"]
+    runs-on: ['ubuntu-20.04']
     steps:
       - name: Set the variables
         env:
@@ -56,5 +56,7 @@ jobs:
           echo "COLOR=${{ github.event.inputs.color || env.DEFAULT_COLOR }}"
           echo 2 $TIER
       - name: Print some text
-        run: echo Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz
+        run: |
+          echo Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz
+          echo default in step 2 Kolkata red error -n kolkata consistent --hyd abc-$DEFAULT_MESSAGE-$DEFAULT_COLOR-xyz
         

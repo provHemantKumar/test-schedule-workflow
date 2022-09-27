@@ -50,7 +50,7 @@ jobs:
         shell: bash
         run: |
           echo "MESSAGE=${{ github.event.inputs.text_to_print || github.env.DEFAULT_MESSAGE }}"
-          echo "COLOR=${{ github.event.inputs.color || env.DEFAULT_COLOR }}" >> $GITHUB_ENV
+          echo "COLOR=${{ github.event.inputs.color || github.env.DEFAULT_COLOR }}"
           echo 2 $TIER
       - name: Print some text
         run: echo Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz

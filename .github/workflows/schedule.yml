@@ -36,12 +36,12 @@ jobs:
         run: |
           echo "MESSAGE=${{ github.event.inputs.text_to_print || env.DEFAULT_MESSAGE }}"
           echo "COLOR=${{ github.event.inputs.color || env.DEFAULT_COLOR }}"
-          echo Step 1 Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz
+          echo "Step 1 Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz"
           echo $TIER
       - name: Print some text step 2 
         run: |
-          echo step 2 Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz
-          echo default in step 2 Kolkata red error -n kolkata consistent --hyd abc-$DEFAULT_MESSAGE-$DEFAULT_COLOR-xyz
+          echo "step 2 Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz"
+          echo "default in step 2 Kolkata red error -n kolkata consistent --hyd abc-$DEFAULT_MESSAGE-$DEFAULT_COLOR-xyz"
         
   print_text1:
     runs-on: ['ubuntu-20.04']
@@ -57,6 +57,6 @@ jobs:
           echo 2 $TIER
       - name: Print some text
         run: |
-          echo Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz
-          echo default in step 2 Kolkata red error -n kolkata consistent --hyd abc-$DEFAULT_MESSAGE-$DEFAULT_COLOR-xyz
+          "echo Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz"
+          "echo default in step 2 Kolkata red error -n kolkata consistent --hyd abc-$DEFAULT_MESSAGE-$DEFAULT_COLOR-xyz"
         

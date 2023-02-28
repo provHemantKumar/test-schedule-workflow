@@ -40,7 +40,6 @@ jobs:
           IFS="," read -a myarray <<< ${{ vars.COLOR_TO_RESTART }}
           for i in "${myarray[@]}"; do
             echo "Value: ${i}"
-            echo "Value: ${i%.*}"
           done
           echo COLOR=${{ github.event.inputs.color || github.env.DEFAULT_COLOR }} >> $GITHUB_ENV
           echo tier ${MESSAGE}  ${TIER} and message 

@@ -37,8 +37,10 @@ jobs:
           #echo "MESSAGE=${{ github.event.inputs.text_to_print || github.env.DEFAULT_MESSAGE }}" >> $GITHUB_ENV
           echo MESSAGE112=${{ toJSON(vars.COLOR_TO_RESTART) }}
           
-          for i in $MESSAGE112; do
-            echo $i
+          IFS="," read -a myarray <<< ${{ vars.COLOR_TO_RESTART }}
+          for i in "${myarray[@]}"; do
+            echo "Value: ${i}"
+            echo "Value: ${i%.*}"
           done
           echo COLOR=${{ github.event.inputs.color || github.env.DEFAULT_COLOR }} >> $GITHUB_ENV
           echo tier ${MESSAGE}  ${TIER} and message 

@@ -35,7 +35,10 @@ jobs:
         run: |
           MESSAGE=${{ github.event.inputs.text_to_print || github.env.DEFAULT_MESSAGE }} >> $GITHUB_ENV
           #echo "MESSAGE=${{ github.event.inputs.text_to_print || github.env.DEFAULT_MESSAGE }}" >> $GITHUB_ENV
-          echo MESSAGE112=${{ vars.COLOR_TO_RESTART }}
+          echo MESSAGE112=(${{ vars.COLOR_TO_RESTART }})
+          for i in $MESSAGE112; do
+            echo $i
+          done
           echo COLOR=${{ github.event.inputs.color || github.env.DEFAULT_COLOR }} >> $GITHUB_ENV
           echo tier ${MESSAGE}  ${TIER} and message 
           echo "Step 1 Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz"

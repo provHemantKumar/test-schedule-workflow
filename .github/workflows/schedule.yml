@@ -44,7 +44,7 @@ jobs:
             c2r+=( ${i} )
           done
           echo "${clustorColors[@]}"
-          echo c2r
+          echo $c2r
     outputs:
       current-color: c2r
           
@@ -57,7 +57,7 @@ jobs:
     needs: [print_text]
     strategy:
       matrix:
-        color: ${{ needs.print_text.outputs.current-color }}
+        color: ${{ fromJSON(vars.COLOR_ARRAY) }}
     runs-on: ['ubuntu-20.04']
     steps:
       - name: Restart

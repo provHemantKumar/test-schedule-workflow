@@ -50,7 +50,7 @@ jobs:
     name: "Replace PIMS pods in ${{ needs.cluster-states.outputs.tier }}"
     strategy:
       matrix:
-        color: ${{ vars.COLOR_TO_RESTART }}
+        color: [ blue, green]
     runs-on: ['ubuntu-20.04']
     steps:
       - name: Restart

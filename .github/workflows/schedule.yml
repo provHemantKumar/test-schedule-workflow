@@ -45,11 +45,12 @@ jobs:
       - name: Print some text step 2 
         run: |
           echo step 2 Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz-  "${{ github.env.DEFAULT_MESSAGE }}"
+  
   replace-pims-pods:
     name: "Replace PIMS pods in ${{ needs.cluster-states.outputs.tier }}"
     strategy:
       matrix:
-        color: ${{ fromJSON(vars.COLOR_TO_RESTART) }}
+        color: ${{ vars.COLOR_TO_RESTART }}
     runs-on: ['ubuntu-20.04']
     steps:
       - name: Restart

@@ -41,6 +41,8 @@ jobs:
           for i in "${clustorColors[@]}"; do
             echo "Value: ${i}"
           done
+          outputs:
+            current-color: ${{ clustorColors }}
           
       - name: Print some text step 2 
         run: |
@@ -48,14 +50,15 @@ jobs:
   
   replace-pims-pods:
     name: "Replace PIMS pods in ${{ needs.cluster-states.outputs.tier }}"
+    needs: [print_text]
     strategy:
       matrix:
-        color: ${{ vars.COLOR_ARRAY }}
+        color: ${{ fromJSON(needs.print_text.outputs.current-color) }}
     runs-on: ['ubuntu-20.04']
     steps:
       - name: Restart
         run: |
-          echo Restarting PIMS pods, ${{ needs.cluster-states.outputs.current-color }} tier, "${{ needs.cluster-states.outputs.current-color }}" color 
+          echo Restarting PIMS pods, ${{ needs.print_text.outputs.current-color }} tier, "${{ needs.print_text.outputs.current-color }}" color 
           echo "Restarted"      
 #   print_text1:
 #     runs-on: ['ubuntu-20.04']

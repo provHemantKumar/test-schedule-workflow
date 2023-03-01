@@ -23,7 +23,7 @@ env:
 jobs:
   cluster-states:
     name: Resolve cluster labels
-    runs-on: [self-hosted, spi-dig-tenant, "dev"]
+    runs-on: ['ubuntu-20.04']
     steps:
       - uses: actions/checkout@v3
 
@@ -42,7 +42,7 @@ jobs:
     strategy:
       matrix:
         color: ${{ fromJSON(vars.COLOR_ARRAY) }}
-    runs-on: [self-hosted, spi-dig-tenant, "${{ needs.cluster-states.outputs.tier }}", "${{ matrix.color }}"]
+    runs-on: ["ubuntu-20.04", "${{ needs.cluster-states.outputs.tier }}", "${{ matrix.color }}"]
     steps:
       - name: Restart
         run: |

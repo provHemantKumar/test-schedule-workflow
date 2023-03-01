@@ -41,15 +41,21 @@ jobs:
           for i in "${clustorColors[@]}"; do
             echo "Value: ${i}"
           done
-          echo COLOR=${{ github.event.inputs.color || github.env.DEFAULT_COLOR }} >> $GITHUB_ENV
-          echo tier ${MESSAGE}  ${TIER} and message 
-          echo "Step 1 Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz"
-          echo "default  --hyd abc-$DEFAULT_MESSAGE-$DEFAULT_COLOR-xyz"
           
       - name: Print some text step 2 
         run: |
           echo step 2 Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz-  "${{ github.env.DEFAULT_MESSAGE }}"
-        
+  replace-pims-pods:
+    name: "Replace PIMS pods in ${{ needs.cluster-states.outputs.tier }}"
+    strategy:
+      matrix:
+        color: ${{ fromJSON(vars.COLOR_TO_RESTART) }}
+    runs-on: ['ubuntu-20.04']
+    steps:
+      - name: Restart
+        run: |
+          echo Restarting PIMS pods, ${{ needs.cluster-states.outputs.current-color }} tier, "${{ needs.cluster-states.outputs.current-color }}" color 
+          echo "Restarted"      
 #   print_text1:
 #     runs-on: ['ubuntu-20.04']
 #     steps:

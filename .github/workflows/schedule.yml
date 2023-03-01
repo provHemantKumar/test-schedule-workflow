@@ -62,7 +62,7 @@ jobs:
     steps:
       - name: Restart
         run: |
-          echo Restarting PIMS pods, "${{ matrix.color }}" tier, "${{ needs.print_text.outputs.current-color }}" color 
+          echo Restarting PIMS pods, "${{ needs.cluster-states.outputs.tier }}" tier, "${{ matrix.color }}" color 
           echo "Restarted"      
 #   print_text1:
 #     runs-on: ['ubuntu-20.04']

@@ -47,8 +47,8 @@ jobs:
           for t in ${allThreads[@]}; do
             runtime=$(./pipeline --threads $t)
             allRuntimes+=( $runtime )
+          done
           echo allRuntimes
-done
     outputs:
       current-color: "${clustorColors[@]}"
           

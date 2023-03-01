@@ -38,19 +38,15 @@ jobs:
           echo MESSAGE112=${{ toJSON(vars.COLOR_TO_RESTART) }}
           
           IFS="," read -a clustorColors <<< ${{ vars.COLOR_TO_RESTART }}
+          c2r=()
           for i in "${clustorColors[@]}"; do
             echo "Value: ${i}"
+            c2r+=( ${i} )
           done
           echo "${clustorColors[@]}"
-          allThreads=(1 2 4 8 16 32 64 128)
-          allRuntimes=()
-          for t in ${allThreads[@]}; do
-            runtime=$(./pipeline --threads $t)
-            allRuntimes+=( $runtime )
-          done
-          echo allRuntimes
+          echo c2r
     outputs:
-      current-color: "${clustorColors[@]}"
+      current-color: c2r
           
 #       - name: Print some text step 2 
 #         run: |

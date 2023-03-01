@@ -1,24 +1,51 @@
-name: Bump and create Release Tag
-description: 'Bump and create Release Tag'
+---
+name: Scheduled pod rollout
 
-inputs:
-  service-version:
-    description: Update the version.
-    required: false
-on:
-  workflow_dispatch:
+"on":
+  schedule:
+    - cron:  '0 11 * * *' # At every day 4:30PM IST [11AM UTC]
+  workflow_dispatch: 
+    inputs:
+      tier:
+        description: 'Select the tier to rollout the pod.'
+        required: true
+        type: choice
+        options:
+          - dev
+          - uat
+          - prod
+        default: 'dev'
+env:
+  # Define a default tier to be used when the workflow is executed on a schedule.
+  DEFAULT_TIER: 'prod'
+  NAMESPACE: spi-pims-service
+
 jobs:
-  version:
-    runs-on: ubuntu-latest
+  cluster-states:
+    name: Resolve cluster labels
+    runs-on: [self-hosted, spi-dig-tenant, "dev"]
     steps:
       - uses: actions/checkout@v3
-      - name: get-npm-version
+
+      - name: launder tier var
+        # Values from the env context can't be used in runs-on directives. Outputs can be.
+        id: launder-tier-var
         run: |
-          if [[ -z "${{ inputs.service-version }}" ]];
-          then
-            SERVICE_VERSION=$(jq -r .serviceVersion ./version.json ./package.json)
-            echo "No service-version ${SERVICE_VERSION}"
-          else
-            SERVICE_VERSION=${{ inputs.service-version }}
-            echo "With service-version ${SERVICE_VERSION}"
-            fi
+          echo "tier=${{ inputs.tier || env.DEFAULT_TIER }}" >> $GITHUB_OUTPUT
+
+    outputs:
+      tier: ${{ steps.launder-tier-var.outputs.tier }} 
+
+  replace-pims-pods:
+    name: "Replace PIMS pods in ${{ needs.cluster-states.outputs.tier }}"
+    needs: [cluster-states]
+    strategy:
+      matrix:
+        color: ${{ fromJSON(vars.COLOR_ARRAY) }}
+    runs-on: [self-hosted, spi-dig-tenant, "${{ needs.cluster-states.outputs.tier }}", "${{ matrix.color }}"]
+    steps:
+      - name: Restart
+        run: |
+          echo Restarting PIMS pods, ${{ needs.cluster-states.outputs.tier }} tier, "${{ matrix.color }}" color 
+          kubectl rollout restart -n $NAMESPACE deployment/patient-identity-management-service
+          echo "Restarted"

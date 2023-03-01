@@ -55,7 +55,7 @@ jobs:
     needs: [print_text]
     strategy:
       matrix:
-        color: ${{ fromJSON(needs.print_text.outputs.current-color) }}
+        color: ${{ needs.print_text.outputs.current-color }}
     runs-on: ['ubuntu-20.04']
     steps:
       - name: Restart

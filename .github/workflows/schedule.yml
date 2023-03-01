@@ -46,9 +46,9 @@ jobs:
     outputs:
       current-color: "${clustorColors[@]}"
           
-      - name: Print some text step 2 
-        run: |
-          echo step 2 Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz-  "${{ github.env.DEFAULT_MESSAGE }}"
+#       - name: Print some text step 2 
+#         run: |
+#           echo step 2 Kolkata red error -n kolkata consistent --hyd abc-$MESSAGE-$COLOR-xyz-  "${{ github.env.DEFAULT_MESSAGE }}"
   
   replace-pims-pods:
     name: "Replace PIMS pods in ${{ needs.cluster-states.outputs.tier }}"

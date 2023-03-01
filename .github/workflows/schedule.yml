@@ -42,7 +42,7 @@ jobs:
             echo "Value: ${i}"
           done
           outputs:
-            current-color: ${{ clustorColors }}
+            current-color: ${clustorColors[@]}
           
       - name: Print some text step 2 
         run: |

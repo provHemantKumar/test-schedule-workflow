@@ -41,8 +41,7 @@ jobs:
           for i in "${clustorColors[@]}"; do
             echo "Value: ${i}"
           done
-          echo ${{ clustorColors }}
-          echo "${clustorColors[@]}"
+          echo ("${clustorColors[@]}")
     outputs:
       current-color: ("${clustorColors[@]}")
           

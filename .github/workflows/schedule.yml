@@ -43,8 +43,8 @@ jobs:
           done
           echo clustorColors
           echo "${clustorColors[@]}"
-          outputs:
-            current-color: "${clustorColors[@]}"
+    outputs:
+      current-color: "${clustorColors[@]}"
           
       - name: Print some text step 2 
         run: |

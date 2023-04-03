@@ -55,7 +55,9 @@ jobs:
         id: launder-tier-var
         run: |
           config_version=${{ steps.get-environment.outputs.environment_name }}
-          echo "${environment}"
+          echo "${{environment}}"
+          echo "${{ steps.get-environment.outputs.environment_name }}"
+          echo "${{ steps.get-environment.outputs.environment }}"
           echo "$environment"
           echo "tier=${{ inputs.tier || env.DEFAULT_TIER }}" >> $GITHUB_OUTPUT
           #PROFILE_NAME="spi-${{ steps.get-environment.outputs.environment_name }}-cdn"
@@ -66,16 +68,16 @@ jobs:
     outputs:
       tier: ${{ steps.launder-tier-var.outputs.tier }} 
   
-  replace-pims-pods:
-    name: "Replace PIMS pods in ${{ needs.cluster-states.outputs.tier }}"
-    needs: [cluster-states]
-    strategy:
-      matrix:
-        color: ${{ fromJSON(vars.COLOR_ARRAY) }}
-    runs-on: ["ubuntu-20.04", "${{ needs.cluster-states.outputs.tier }}", "${{ matrix.color }}"]
-    steps:
-      - name: Restart
-        run: |
-          echo Restarting PIMS pods, ${{ needs.cluster-states.outputs.tier }} tier, "${{ matrix.color }}" color 
-          kubectl rollout restart -n $NAMESPACE deployment/patient-identity-management-service
-          echo "Restarted"
+#   replace-pims-pods:
+#     name: "Replace PIMS pods in ${{ needs.cluster-states.outputs.tier }}"
+#     needs: [cluster-states]
+#     strategy:
+#       matrix:
+#         color: ${{ fromJSON(vars.COLOR_ARRAY) }}
+#     runs-on: ["ubuntu-20.04", "${{ needs.cluster-states.outputs.tier }}", "${{ matrix.color }}"]
+#     steps:
+#       - name: Restart
+#         run: |
+#           echo Restarting PIMS pods, ${{ needs.cluster-states.outputs.tier }} tier, "${{ matrix.color }}" color 
+#           kubectl rollout restart -n $NAMESPACE deployment/patient-identity-management-service
+#           echo "Restarted"

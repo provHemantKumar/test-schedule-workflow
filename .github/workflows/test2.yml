@@ -2,8 +2,8 @@
 name: Scheduled pod rollout
 
 "on":
-  schedule:
-    - cron:  '0 11 * * *' # At every day 4:30PM IST [11AM UTC]
+#   schedule:
+#     - cron:  '0 11 * * *' # At every day 4:30PM IST [11AM UTC]
   workflow_dispatch: 
     inputs:
       tier:
@@ -21,35 +21,46 @@ env:
   NAMESPACE: spi-pims-service
 
 jobs:
+
+  get-environment:
+    runs-on: ['ubuntu-20.04']
+    outputs:
+      environment_name: ${{ steps.get_environment.outputs.environment_name }}
+    steps:
+      - id: get_environment
+        run: |
+          if [ '${{ inputs.tier }}' == 'dev' ]
+          then
+            echo "::set-output name=environment_name::test"
+          elif [ '${{ inputs.tier }}' == 'uat' ]
+          then
+            echo "::set-output name=environment_name::qa"
+          elif [ '${{ inputs.tier }}' == 'prod' ]
+          then
+            echo "::set-output name=environment_name::production"
+          fi
+          
   cluster-states:
     name: Resolve cluster labels
     runs-on: ['ubuntu-20.04']
+    needs: [get-environment]
+    
     steps:
       - uses: actions/checkout@v3
-
       - name: launder tier var
         # Values from the env context can't be used in runs-on directives. Outputs can be.
         id: launder-tier-var
         run: |
-          if [ "{{ inputs.tier}}" = "dev" ]
-          then
-            PROFILE_NAME="spi-DEV-cdn"
-          elif [ "{{ inputs.tier}}" = "uat" ]
-          then
-            PROFILE_NAME="spi-UAT-cdn"
-          elif [ "{{ inputs.tier}}" = "prod" ]
-          then
-            PROFILE_NAME="spi-PROD-cdn"
-          fi
+        
           echo "tier=${{ inputs.tier || env.DEFAULT_TIER }}" >> $GITHUB_OUTPUT
-          #PROFILE_NAME="spi-${{ inputs.tier }}-cdn"
+          #PROFILE_NAME="spi-${{ steps.get-environment.outputs.environment_name }}-cdn"
           ENDPOINT=${PROFILE_NAME}.azureedge.net
           GROUP="${{ secrets.RESOURCE_GROUP }}"
           echo "az cdn endpoint purge -g ${GROUP} -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'"
 
     outputs:
       tier: ${{ steps.launder-tier-var.outputs.tier }} 
-
+  
   replace-pims-pods:
     name: "Replace PIMS pods in ${{ needs.cluster-states.outputs.tier }}"
     needs: [cluster-states]

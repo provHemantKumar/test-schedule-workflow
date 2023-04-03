@@ -32,7 +32,7 @@ jobs:
             echo "::set-output name=resource_group_name::production"
           fi
   main:
-    needs: [ get_resource_group ]
+    needs: [ get-resource-group ]
     runs-on: ['ubuntu-20.04']
     env:
       CUSTOM: "wewe"

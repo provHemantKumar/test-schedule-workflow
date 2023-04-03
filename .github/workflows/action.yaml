@@ -1,0 +1,23 @@
+name: Purge CDN Endpoints
+description: 'Purge CDN endpoints'
+
+inputs:
+  tier:
+    description: "Tier"
+    required: true
+  resource_group:
+    description: "The resource group of Azure CDN profile"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      run: |
+        # We need to copy all the files in a flat dir. This will make easy to sync the assets.
+        # In the future, we should refactor the asset to avoid this.
+        PROFILE_NAME="spi-${{ inputs.tier }}-cdn"
+        ENDPOINT=${PROFILE_NAME}.azureedge.net
+        GROUP="${{ inputs.resource_group }}"
+        az cdn endpoint purge -g ${GROUP} -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'
+

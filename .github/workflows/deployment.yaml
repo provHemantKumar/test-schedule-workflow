@@ -14,6 +14,7 @@ on:
 
 # We choose the runner-tags based on the customer
 jobs:
+
   get-resource-group:
     runs-on: ['ubuntu-20.04']
     outputs:
@@ -38,6 +39,8 @@ jobs:
       CUSTOM: "wewe"
       CONNECTION_STRING: "weweqw"
     steps:
+      - run: echo "Starting..."
+      - uses: actions/checkout@v3
       - name: Purge CDN Endpoints
         uses: ./.github/purge-cdn-endpoints
         with:

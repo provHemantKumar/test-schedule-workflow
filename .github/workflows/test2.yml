@@ -31,12 +31,15 @@ jobs:
         run: |
           if [ '${{ inputs.tier }}' == 'dev' ]
           then
+            echo "devvvv"
             echo "::set-output name=environment_name::test"
           elif [ '${{ inputs.tier }}' == 'uat' ]
           then
+            echo "uatttt"
             echo "::set-output name=environment_name::qa"
           elif [ '${{ inputs.tier }}' == 'prod' ]
           then
+            echo "prodddd"
             echo "::set-output name=environment_name::production"
           fi
           

@@ -55,7 +55,7 @@ jobs:
         id: launder-tier-var
         run: |
           echo ${{ needs.get-environment.outputs.environment_name }}
-          
+          PROFILE_NAME=${{ needs.get-environment.outputs.environment_name }}
           echo "${{ steps.get-environment.outputs.environment_name }}"
         
           echo "tier=${{ inputs.tier || env.DEFAULT_TIER }}" >> $GITHUB_OUTPUT

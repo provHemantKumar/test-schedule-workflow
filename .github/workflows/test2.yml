@@ -31,6 +31,16 @@ jobs:
         # Values from the env context can't be used in runs-on directives. Outputs can be.
         id: launder-tier-var
         run: |
+          if [ "{{ inputs.tier}}" = "dev" ]
+          then
+            echo "dev TIER "
+          elif [ "{{ inputs.tier}}" = "uat" ]
+          then
+            echo "uat TIER"
+          elif [ "{{ inputs.tier}}" = "prod" ]
+          then
+            echo "PROD TIER"
+          fi
           echo "tier=${{ inputs.tier || env.DEFAULT_TIER }}" >> $GITHUB_OUTPUT
           PROFILE_NAME="spi-${{ inputs.tier }}-cdn"
           ENDPOINT=${PROFILE_NAME}.azureedge.net

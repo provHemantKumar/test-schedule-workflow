@@ -50,10 +50,17 @@ jobs:
     environment: ${{ needs.get-environment.outputs.environment_name }}
     steps:
       - uses: actions/checkout@v3
+        env:
+          Greeting: Hello
       - name: launder tier var
         # Values from the env context can't be used in runs-on directives. Outputs can be.
         id: launder-tier-var
         run: |
+          echo "$Greeting"
+          Greeting="worldkjdkj"
+          echo "$Greeting"
+          Greeting="xyz"
+          echo "$Greeting"
           echo ${{ needs.get-environment.outputs.environment_name }}
           PROFILE_NAME=${{ needs.get-environment.outputs.environment_name }}
           echo "${{ steps.get-environment.outputs.environment_name }}"

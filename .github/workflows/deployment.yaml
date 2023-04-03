@@ -1,0 +1,45 @@
+name: "Deployment pipeline"
+
+on:
+  workflow_dispatch:
+    inputs:
+      tier:
+        type: choice
+        description: "Tier"
+        required: true
+        options:
+          - uat
+          - dev
+          - prod
+
+# We choose the runner-tags based on the customer
+jobs:
+  get-resource-group:
+    runs-on: ['ubuntu-20.04']
+    outputs:
+      resource_group: ${{ steps.get_resource_group.outputs.resource_group_name }}
+    steps:
+      - id: get_resource_group
+        run: |
+          if [ '${{ inputs.tier }}' == 'dev' ]
+          then
+            echo "::set-output name=resource_group_name::test"
+          elif [ '${{ inputs.tier }}' == 'uat' ]
+          then
+            echo "::set-output name=resource_group_name::qa"
+          elif [ '${{ inputs.tier }}' == 'prod' ]
+          then
+            echo "::set-output name=resource_group_name::production"
+          fi
+  main:
+    needs: [ get_resource_group ]
+    runs-on: ['ubuntu-20.04']
+    env:
+      CUSTOM: "wewe"
+      CONNECTION_STRING: "weweqw"
+    steps:
+      - name: Purge CDN Endpoints
+        uses: ./.github/purge-cdn-endpoints
+        with:
+          tier: "${{inputs.tier}}"
+          resource_group: ${{steps.get-resource-group.outputs.resource_group}}

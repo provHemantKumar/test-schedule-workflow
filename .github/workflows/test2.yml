@@ -55,8 +55,8 @@ jobs:
         id: launder-tier-var
         run: |
           config_version=${{ steps.get-environment.outputs.environment_name }}
-          echo "${{environment}}"
           echo "${{ steps.get-environment.outputs.environment_name }}"
+          echo "${{ steps.get-environment.outputs.environment }}"
           echo "$environment"
           echo "tier=${{ inputs.tier || env.DEFAULT_TIER }}" >> $GITHUB_OUTPUT
           #PROFILE_NAME="spi-${{ steps.get-environment.outputs.environment_name }}-cdn"

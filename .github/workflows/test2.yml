@@ -47,7 +47,7 @@ jobs:
     name: Resolve cluster labels
     runs-on: ['ubuntu-20.04']
     needs: [get-environment]
-    
+    environment: ${{ needs.get-environment.outputs.environment_name }}
     steps:
       - uses: actions/checkout@v3
       - name: launder tier var
@@ -55,7 +55,8 @@ jobs:
         id: launder-tier-var
         run: |
           config_version=${{ steps.get-environment.outputs.environment_name }}
-          echo "${config_version}"
+          echo "${environment}"
+          echo "$environment"
           echo "tier=${{ inputs.tier || env.DEFAULT_TIER }}" >> $GITHUB_OUTPUT
           #PROFILE_NAME="spi-${{ steps.get-environment.outputs.environment_name }}-cdn"
           ENDPOINT=${PROFILE_NAME}.azureedge.net

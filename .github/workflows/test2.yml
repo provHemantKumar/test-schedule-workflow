@@ -33,16 +33,16 @@ jobs:
         run: |
           if [ "{{ inputs.tier}}" = "dev" ]
           then
-            echo "dev TIER "
+            PROFILE_NAME="spi-DEV-cdn"
           elif [ "{{ inputs.tier}}" = "uat" ]
           then
-            echo "uat TIER"
+            PROFILE_NAME="spi-UAT-cdn"
           elif [ "{{ inputs.tier}}" = "prod" ]
           then
-            echo "PROD TIER"
+            PROFILE_NAME="spi-PROD-cdn"
           fi
           echo "tier=${{ inputs.tier || env.DEFAULT_TIER }}" >> $GITHUB_OUTPUT
-          PROFILE_NAME="spi-${{ inputs.tier }}-cdn"
+          #PROFILE_NAME="spi-${{ inputs.tier }}-cdn"
           ENDPOINT=${PROFILE_NAME}.azureedge.net
           GROUP="${{ secrets.RESOURCE_GROUP }}"
           echo "az cdn endpoint purge -g ${GROUP} -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'"

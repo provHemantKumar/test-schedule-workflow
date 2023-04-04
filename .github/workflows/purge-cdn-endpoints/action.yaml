@@ -8,11 +8,12 @@ inputs:
   resource_group:
     description: "The resource group of Azure CDN profile"
     required: true
-env:
-  RG: "dfgdfgd"
 runs:
   using: "composite"
   steps:
+    - name: "A step"
+      env:
+        RG: "Hello"
     - shell: bash
       run: |
         # if [ '${{ inputs.tier }}' == 'dev' ]

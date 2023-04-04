@@ -45,4 +45,4 @@ jobs:
         uses: ./.github/workflows/purge-cdn-endpoints
         with:
           tier: "${{inputs.tier}}"
-          resource_group: ${{steps.get-resource-group.outputs.resource_group}}
+          resource_group: ${{needs.get-resource-group.outputs.resource_group}}

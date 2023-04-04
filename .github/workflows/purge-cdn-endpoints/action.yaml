@@ -9,7 +9,7 @@ inputs:
     description: "The resource group of Azure CDN profile"
     required: true
 env:
-  RG: ""
+  RG: "dfgdfgd"
 runs:
   using: "composite"
   steps:
@@ -33,5 +33,6 @@ runs:
         PROFILE_NAME="spi-${{ inputs.tier }}-cdn"
         ENDPOINT=${PROFILE_NAME}.azureedge.net
         # GROUP="${{ inputs.resource_group }}"
-        echo "az cdn endpoint purge -g ${RG} -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'"
+        echo "Hello $RG"
+        echo "az cdn endpoint purge -g $RG -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'"
 

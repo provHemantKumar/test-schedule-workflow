@@ -8,11 +8,10 @@ inputs:
   resource_group:
     description: "The resource group of Azure CDN profile"
     required: true
-
+env:
+  RG: ""
 runs:
   using: "composite"
-  env:
-      RG: ""
   steps:
     - shell: bash
       run: |

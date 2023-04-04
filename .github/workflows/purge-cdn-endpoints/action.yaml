@@ -17,16 +17,13 @@ runs:
         if [ '${{ inputs.tier }}' == 'dev' ]
           then
             # echo "::set-output name=resource_group_name::test"
-            echo "DEVVVV"
             RG="test${inputs.tier}-1"
           elif [ '${{ inputs.tier }}' == 'uat' ]
           then
-            echo "UATTT"
             # echo "::set-output name=resource_group_name::qa"
             RG="test${inputs.tier}-2"
           elif [ '${{ inputs.tier }}' == 'prod' ]
           then
-            echo "PRODDDD"
             # echo "::set-output name=resource_group_name::production"
             RG="test${inputs.tier}-3"
         fi

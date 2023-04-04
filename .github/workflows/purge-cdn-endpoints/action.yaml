@@ -32,6 +32,6 @@ runs:
         # In the future, we should refactor the asset to avoid this.
         PROFILE_NAME="spi-${{ inputs.tier }}-cdn"
         ENDPOINT=${PROFILE_NAME}.azureedge.net
-        GROUP="${{ inputs.resource_group }}"
-        echo "az cdn endpoint purge -g ${GROUP} ${RG} -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'"
+        # GROUP="${{ inputs.resource_group }}"
+        echo "az cdn endpoint purge -g ${RG} -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'"
 

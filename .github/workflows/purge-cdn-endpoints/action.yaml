@@ -16,15 +16,15 @@ runs:
         if [ '${{ inputs.tier }}' == 'dev' ]
           then
             # echo "::set-output name=resource_group_name::test"
-            RG="test-${{secrets.RESOURCE_GROUP}}-1"
+            RG="test-${{vars.RESOURCE_GROUP}}-1"
           elif [ '${{ inputs.tier }}' == 'uat' ]
           then
             # echo "::set-output name=resource_group_name::qa"
-            RG="test${{secrets.RESOURCE_GROUP}}-2"
+            RG="test${{vars.RESOURCE_GROUP}}-2"
           elif [ '${{ inputs.tier }}' == 'prod' ]
           then
             # echo "::set-output name=resource_group_name::production"
-            RG="test${{secrets.RESOURCE_GROUP}}-3"
+            RG="test${{vars.RESOURCE_GROUP}}-3"
         fi
         # We need to copy all the files in a flat dir. This will make easy to sync the assets.
         # In the future, we should refactor the asset to avoid this.

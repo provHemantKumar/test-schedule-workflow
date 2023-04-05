@@ -8,31 +8,50 @@ inputs:
     description: "The resource group of Azure CDN profile"
     required: true
     
+# runs:
+#   using: "composite"
+#   steps:
+#     - shell: bash
+#       run: |
+#         # RG="Hello world"
+#         # echo ${{vars.RESOURCE_GROUP}}
+#         # if [ '${{ inputs.tier }}' == 'dev' ]
+#         # then
+#         #   # echo "::set-output name=resource_group_name::test"
+#         #   # RG="test-${{vars.RESOURCE_GROUP}}-1"
+#         # elif [ '${{ inputs.tier }}' == 'uat' ]
+#         # then
+#         #   # echo "::set-output name=resource_group_name::qa"
+#         #   # RG="test${{vars.RESOURCE_GROUP}}-2"
+#         # elif [ '${{ inputs.tier }}' == 'prod' ]
+#         # then
+#         #   # echo "::set-output name=resource_group_name::production"
+#         #   # RG="test${{vars.RESOURCE_GROUP}}-3"
+#         # fi
+#         # We need to copy all the files in a flat dir. This will make easy to sync the assets.
+#         # In the future, we should refactor the asset to avoid this.
+#         PROFILE_NAME="spi-${{ inputs.tier }}-cdn"
+#         ENDPOINT=${PROFILE_NAME}.azureedge.net
+#         # GROUP="${{ inputs.resource_group }}"
+#         echo "Hello ${RG}"
+#         echo "az cdn endpoint purge -g $RG -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'"
+
 runs:
   using: "composite"
   steps:
     - shell: bash
       run: |
-        # RG="Hello world"
-        # echo ${{vars.RESOURCE_GROUP}}
-        # if [ '${{ inputs.tier }}' == 'dev' ]
-        # then
-        #   # echo "::set-output name=resource_group_name::test"
-        #   # RG="test-${{vars.RESOURCE_GROUP}}-1"
-        # elif [ '${{ inputs.tier }}' == 'uat' ]
-        # then
-        #   # echo "::set-output name=resource_group_name::qa"
-        #   # RG="test${{vars.RESOURCE_GROUP}}-2"
-        # elif [ '${{ inputs.tier }}' == 'prod' ]
-        # then
-        #   # echo "::set-output name=resource_group_name::production"
-        #   # RG="test${{vars.RESOURCE_GROUP}}-3"
-        # fi
-        # We need to copy all the files in a flat dir. This will make easy to sync the assets.
-        # In the future, we should refactor the asset to avoid this.
+        GROUP=""
+        if [ '${{ inputs.tier }}' == 'dev' ]
+          then
+            GROUP="${{ vars.RESOURCE_GROUP }}"
+          elif [ '${{ inputs.tier }}' == 'uat' ]
+          then
+            GROUP="${{ vars.RESOURCE_GROUP }}"
+          elif [ '${{ inputs.tier }}' == 'prod' ]
+          then
+            GROUP="${{ vars.RESOURCE_GROUP }}"
+        fi
         PROFILE_NAME="spi-${{ inputs.tier }}-cdn"
         ENDPOINT=${PROFILE_NAME}.azureedge.net
-        # GROUP="${{ inputs.resource_group }}"
-        echo "Hello ${RG}"
-        echo "az cdn endpoint purge -g $RG -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'"
-
+        az cdn endpoint purge -g ${GROUP} -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'

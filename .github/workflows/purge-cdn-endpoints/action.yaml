@@ -13,21 +13,21 @@ runs:
   steps:
     - shell: bash
       run: |
-        RG="Hello world"
-        echo ${{vars.RESOURCE_GROUP}}
-        if [ '${{ inputs.tier }}' == 'dev' ]
-        then
-          # echo "::set-output name=resource_group_name::test"
-          # RG="test-${{vars.RESOURCE_GROUP}}-1"
-        elif [ '${{ inputs.tier }}' == 'uat' ]
-        then
-          # echo "::set-output name=resource_group_name::qa"
-          # RG="test${{vars.RESOURCE_GROUP}}-2"
-        elif [ '${{ inputs.tier }}' == 'prod' ]
-        then
-          # echo "::set-output name=resource_group_name::production"
-          # RG="test${{vars.RESOURCE_GROUP}}-3"
-        fi
+        # RG="Hello world"
+        # echo ${{vars.RESOURCE_GROUP}}
+        # if [ '${{ inputs.tier }}' == 'dev' ]
+        # then
+        #   # echo "::set-output name=resource_group_name::test"
+        #   # RG="test-${{vars.RESOURCE_GROUP}}-1"
+        # elif [ '${{ inputs.tier }}' == 'uat' ]
+        # then
+        #   # echo "::set-output name=resource_group_name::qa"
+        #   # RG="test${{vars.RESOURCE_GROUP}}-2"
+        # elif [ '${{ inputs.tier }}' == 'prod' ]
+        # then
+        #   # echo "::set-output name=resource_group_name::production"
+        #   # RG="test${{vars.RESOURCE_GROUP}}-3"
+        # fi
         # We need to copy all the files in a flat dir. This will make easy to sync the assets.
         # In the future, we should refactor the asset to avoid this.
         PROFILE_NAME="spi-${{ inputs.tier }}-cdn"

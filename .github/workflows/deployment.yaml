@@ -18,19 +18,19 @@ jobs:
   get-resource-group:
     runs-on: ['ubuntu-20.04']
     outputs:
-      resource_group: ${{ steps.get_resource_group.outputs.resource_group_name }}
+      resource_group: ${{ steps.get_resource_group.outputs.resource_group_name1 }}
     steps:
       - id: get_resource_group
         run: |
           if [ '${{ inputs.tier }}' == 'dev' ]
           then
-            echo "::set-output name=resource_group_name::test"
+            echo "::set-output name=resource_group_name1::spi-"
           elif [ '${{ inputs.tier }}' == 'uat' ]
           then
-            echo "::set-output name=resource_group_name::qa"
+            echo "::set-output name=resource_group_name1::qa"
           elif [ '${{ inputs.tier }}' == 'prod' ]
           then
-            echo "::set-output name=resource_group_name::production"
+            echo "::set-output name=resource_group_name1::production"
           fi
   main:
     needs: [ get-resource-group ]
@@ -39,10 +39,21 @@ jobs:
       CUSTOM: "wewe"
       CONNECTION_STRING: "weweqw"
     steps:
-      - run: echo "Starting..."
-      - uses: actions/checkout@v3
+      - id: set-resource-group
+        name: Load Policy Version
+        run: |
+          if [ '${{ inputs.tier }}' == 'dev' ]
+          then
+            echo "::set-output name=resource_group_name::sps-dev"
+          elif [ '${{ inputs.tier }}' == 'uat' ]
+          then
+            echo "::set-output name=resource_group_name::ssp-uat"
+          elif [ '${{ inputs.tier }}' == 'prod' ]
+          then
+            echo "::set-output name=resource_group_name::abc-production"
+          fi
       - name: Purge CDN Endpoints
         uses: ./.github/workflows/purge-cdn-endpoints
         with:
           tier: "${{inputs.tier}}"
-          resource_group: ${{needs.get-resource-group.outputs.resource_group}}
+          resource_group: ${{needs.set-resource-group.outputs.resource_group}}

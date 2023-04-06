@@ -41,17 +41,17 @@ runs:
   steps:
     - shell: bash
       run: |
-        GROUP=""
-        if [ '${{ inputs.tier }}' == 'dev' ]
-          then
-            GROUP="${{ vars.RESOURCE_GROUP }}"
-          elif [ '${{ inputs.tier }}' == 'uat' ]
-          then
-            GROUP="${{ vars.RESOURCE_GROUP }}"
-          elif [ '${{ inputs.tier }}' == 'prod' ]
-          then
-            GROUP="${{ vars.RESOURCE_GROUP }}"
-        fi
+        GROUP='${{ inputs.resource_group }}'
+        # if [ '${{ inputs.tier }}' == 'dev' ]
+        #   then
+        #     GROUP="${{ inputs. }}"
+        #   elif [ '${{ inputs.tier }}' == 'uat' ]
+        #   then
+        #     GROUP="${{ vars.RESOURCE_GROUP }}"
+        #   elif [ '${{ inputs.tier }}' == 'prod' ]
+        #   then
+        #     GROUP="${{ vars.RESOURCE_GROUP }}"
+        # fi
         PROFILE_NAME="spi-${{ inputs.tier }}-cdn"
         ENDPOINT=${PROFILE_NAME}.azureedge.net
         az cdn endpoint purge -g ${GROUP} -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'

@@ -4,9 +4,9 @@ inputs:
   tier:
     description: "Tier"
     required: true
-  resource_group:
-    description: "The resource group of Azure CDN profile"
-    required: true
+  # resource_group:
+  #   description: "The resource group of Azure CDN profile"
+  #   required: true
     
 # runs:
 #   using: "composite"
@@ -41,7 +41,7 @@ runs:
   steps:
     - shell: bash
       run: |
-        GROUP='${{ inputs.resource_group }}'
+        # GROUP='${{ inputs.resource_group }}'
         # if [ '${{ inputs.tier }}' == 'dev' ]
         #   then
         #     GROUP="${{ inputs. }}"

@@ -33,7 +33,7 @@ jobs:
             echo "::set-output name=resource_group_name1::production"
           fi
   main:
-    needs: [ get-resource-group ]
+    # needs: [ get-resource-group ]
     runs-on: ['ubuntu-20.04']
     env:
       CUSTOM: "wewe"
@@ -57,4 +57,4 @@ jobs:
         uses: ./.github/workflows/purge-cdn-endpoints
         with:
           tier: "${{inputs.tier}}"
-          resource_group: ${{needs.set-resource-group.outputs.resource_group}}
+          # resource_group: ${{needs.set-resource-group.outputs.resource_group}}

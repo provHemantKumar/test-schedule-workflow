@@ -39,20 +39,20 @@ jobs:
       CUSTOM: "wewe"
       CONNECTION_STRING: "weweqw"
     steps:
-      - id: set-resource-group
-        name: Load Policy Version
-        run: |
-          if [ '${{ inputs.tier }}' == 'dev' ]
-          then
-            echo "::set-output name=resource_group::sps-dev"
-          elif [ '${{ inputs.tier }}' == 'uat' ]
-          then
-            echo "::set-output name=resource_group::ssp-uat"
-          elif [ '${{ inputs.tier }}' == 'prod' ]
-          then
-            echo "::set-output name=resource_group::abc-production"
-          fi
-        uses: actions/checkout@v3
+      # - id: set-resource-group
+      #   name: Set Resource
+      #   run: |
+      #     if [ '${{ inputs.tier }}' == 'dev' ]
+      #     then
+      #       echo "::set-output name=resource_group::sps-dev"
+      #     elif [ '${{ inputs.tier }}' == 'uat' ]
+      #     then
+      #       echo "::set-output name=resource_group::ssp-uat"
+      #     elif [ '${{ inputs.tier }}' == 'prod' ]
+      #     then
+      #       echo "::set-output name=resource_group::abc-production"
+      #     fi
+      # - uses: actions/checkout@v3
       - name: Purge CDN Endpoints
         uses: ./.github/workflows/purge-cdn-endpoints
         with:

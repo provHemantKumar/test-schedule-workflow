@@ -53,7 +53,9 @@ jobs:
             echo "::set-output name=resource_group::ssp-uat"
           elif [ '${{ inputs.tier }}' == 'prod' ]
           then
+            echo "set the output"
             echo "::set-output name=resource_group::abc-production"
+            echo "run the output"
           fi
       - name: Purge CDN Endpoints
         uses: ./.github/workflows/purge-cdn-endpoints

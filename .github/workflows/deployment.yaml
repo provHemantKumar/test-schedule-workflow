@@ -1,3 +1,4 @@
+
 name: "Deployment pipeline"
 
 on:
@@ -18,43 +19,31 @@ jobs:
   get-resource-group:
     runs-on: ['ubuntu-20.04']
     outputs:
-      resource_group: ${{ steps.get_resource_group.outputs.resource_group_name1 }}
+      resource_group: ${{ steps.get_resource_group.outputs.resource_group_name }}
     steps:
       - id: get_resource_group
         run: |
           if [ '${{ inputs.tier }}' == 'dev' ]
           then
-            echo "::set-output name=resource_group_name1::spi-"
+            echo "::set-output name=resource_group_name::test"
           elif [ '${{ inputs.tier }}' == 'uat' ]
           then
-            echo "::set-output name=resource_group_name1::qa"
+            echo "::set-output name=resource_group_name::qa"
           elif [ '${{ inputs.tier }}' == 'prod' ]
           then
-            echo "::set-output name=resource_group_name1::production"
+            echo "::set-output name=resource_group_name::production"
           fi
   main:
-    # needs: [ get-resource-group ]
+    needs: [ get-resource-group ]
     runs-on: ['ubuntu-20.04']
     env:
       CUSTOM: "wewe"
       CONNECTION_STRING: "weweqw"
     steps:
-      # - id: set-resource-group
-      #   name: Set Resource
-      #   run: |
-      #     if [ '${{ inputs.tier }}' == 'dev' ]
-      #     then
-      #       echo "::set-output name=resource_group::sps-dev"
-      #     elif [ '${{ inputs.tier }}' == 'uat' ]
-      #     then
-      #       echo "::set-output name=resource_group::ssp-uat"
-      #     elif [ '${{ inputs.tier }}' == 'prod' ]
-      #     then
-      #       echo "::set-output name=resource_group::abc-production"
-      #     fi
-      # - uses: actions/checkout@v3
+      - run: echo "Starting..."
+      - uses: actions/checkout@v3
       - name: Purge CDN Endpoints
         uses: ./.github/workflows/purge-cdn-endpoints
         with:
           tier: "${{inputs.tier}}"
-          # resource_group: ${{needs.set-resource-group.outputs.resource_group}}
+          resource_group: ${{needs.get-resource-group.outputs.resource_group}}

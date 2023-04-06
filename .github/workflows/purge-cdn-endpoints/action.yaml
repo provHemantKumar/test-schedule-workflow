@@ -4,9 +4,9 @@ inputs:
   tier:
     description: "Tier"
     required: true
-  # resource_group:
-  #   description: "The resource group of Azure CDN profile"
-  #   required: true
+  resource_group:
+    description: "The resource group of Azure CDN profile"
+    required: true
     
 # runs:
 #   using: "composite"
@@ -54,4 +54,4 @@ runs:
         # fi
         PROFILE_NAME="spi-${{ inputs.tier }}-cdn"
         ENDPOINT=${PROFILE_NAME}.azureedge.net
-        az cdn endpoint purge -g ${GROUP} -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'
+        echo "az cdn endpoint purge -g ${GROUP} -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'"

@@ -17,5 +17,5 @@ runs:
          PROFILE_NAME="spi-${{ inputs.tier }}-cdn"
          ENDPOINT=${PROFILE_NAME}.azureedge.net
          GROUP="${{ inputs.resource_group }}"
-         az cdn endpoint purge -g ${GROUP} -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'
+        #  az cdn endpoint purge -g ${GROUP} -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'
          echo "az cdn endpoint purge -g ${GROUP} -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'"

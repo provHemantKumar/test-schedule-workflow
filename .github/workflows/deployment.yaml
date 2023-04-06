@@ -52,7 +52,7 @@ jobs:
           then
             echo "::set-output name=resource_group::abc-production"
           fi
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
       - name: Purge CDN Endpoints
         uses: ./.github/workflows/purge-cdn-endpoints
         with:

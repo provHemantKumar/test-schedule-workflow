@@ -44,13 +44,13 @@ jobs:
         run: |
           if [ '${{ inputs.tier }}' == 'dev' ]
           then
-            echo "::set-output name=resource_group_name::sps-dev"
+            echo "::set-output name=resource_group::sps-dev"
           elif [ '${{ inputs.tier }}' == 'uat' ]
           then
-            echo "::set-output name=resource_group_name::ssp-uat"
+            echo "::set-output name=resource_group::ssp-uat"
           elif [ '${{ inputs.tier }}' == 'prod' ]
           then
-            echo "::set-output name=resource_group_name::abc-production"
+            echo "::set-output name=resource_group::abc-production"
           fi
       - name: Purge CDN Endpoints
         uses: ./.github/workflows/purge-cdn-endpoints

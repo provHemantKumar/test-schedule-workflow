@@ -43,7 +43,7 @@ jobs:
       - run: echo "Starting..."
       - uses: actions/checkout@v3
       - id: get-resource-group-name
-        name: Get Resource
+        name: get-resource-group-name
         run: |
           if [ '${{ inputs.tier }}' == 'dev' ]
           then

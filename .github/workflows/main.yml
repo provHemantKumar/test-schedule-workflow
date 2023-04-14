@@ -1,3 +1,4 @@
+name: "MAIN"
 on: [push]
 
 jobs:
@@ -12,8 +13,21 @@ jobs:
           who-to-greet: 'Mona the Octocat'
       - run: echo random-number ${{ steps.foo.outputs.random-number }}
         shell: bash
+      - id: get-resource-group
+        name: Get Resource Group
+        run: |
+          if [ 'dev' == 'dev' ]
+          then
+            echo "::set-output name=resource_group::dd-rg"
+          elif [ '${{ inputs.tier }}' == 'uat' ]
+          then
+            echo "::set-output name=resource_group::sdsd-rg"
+          elif [ '${{ inputs.tier }}' == 'prod' ]
+          then
+            echo "::set-output name=resource_group::sdsdewc"
+          fi
       - name: Purge CDN Endpoints
         uses: ./.github/workflows/actions/purge-cdn-endpoints
         with:
           tier: "dev"
-          resource_group: "rg_yuy"
+          resource_group: ${{steps.get-resource-group.outputs.resource_group}}

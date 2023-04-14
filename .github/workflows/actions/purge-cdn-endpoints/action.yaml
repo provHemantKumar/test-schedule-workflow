@@ -15,8 +15,8 @@ runs:
         # We need to copy all the files in a flat dir. This will make easy to sync the assets.
         # In the future, we should refactor the asset to avoid this.
         echo "resource_group-${{ inputs.resource_group }}"
-        PROFILE_NAME="spi-${{ inputs.tier }}-cdn"
-        ENDPOINT=${PROFILE_NAME}.azureedge.net
+        PROFILE_NAME="ppp-${{ inputs.tier }}-cdn"
+        ENDPOINT=${PROFILE_NAME}.net
         GROUP="${{ inputs.resource_group }}"
         #  az cdn endpoint purge -g ${GROUP} -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'
         echo "az cdn endpoint purge -g ${GROUP} -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'"

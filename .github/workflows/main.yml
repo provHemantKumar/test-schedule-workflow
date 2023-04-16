@@ -31,3 +31,7 @@ jobs:
         with:
           tier: "dev"
           resource_group: ${{steps.get-resource-group.outputs.resource_group}}
+      - name: test1 new Workflow
+        run: | 
+          echo "New Workflow test1 started"
+          echo "added new step in test1 branch"

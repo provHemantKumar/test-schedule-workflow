@@ -50,14 +50,18 @@ jobs:
           if [ '${{ inputs.tier }}' == 'dev' ]
           then
             echo "::set-output name=resource_group::sps-dev"
+            echo "::set-output name=subscription_id::${{vars.UAT_SUBSCRIPTION_ID}}"
+            
           elif [ '${{ inputs.tier }}' == 'uat' ]
           then
             echo "::set-output name=resource_group::ssp-uat"
+            echo "::set-output name=subscription_id::${{vars.UAT_SUBSCRIPTION_ID}}"
+
           elif [ '${{ inputs.tier }}' == 'prod' ]
           then
             echo "set the output"
             echo "::set-output name=resource_group::abc-production"
-            echo "run the output"
+            echo "::set-output name=subscription_id::${{vars.UAT_SUBSCRIPTION_ID}}"
           fi
       - name: Purge CDN Endpoints
         if: ${{ inputs.use_purge }}
@@ -65,3 +69,4 @@ jobs:
         with:
           tier: "${{inputs.tier}}"
           resource_group: ${{steps.get-resource-group-name.outputs.resource_group}}
+          subscription_id: ${{steps.get-resource-group-name.outputs.subscription_id}}

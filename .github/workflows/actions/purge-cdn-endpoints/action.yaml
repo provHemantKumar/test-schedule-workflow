@@ -7,6 +7,9 @@ inputs:
   resource_group:
     description: "The resource group of Azure CDN profile"
     required: true
+  subscription_id:
+    description: "The subscription id of Azure CDN profile"
+    required: true
 runs:
   using: "composite"
   steps:
@@ -18,5 +21,6 @@ runs:
         PROFILE_NAME="ppp-${{ inputs.tier }}-cdn"
         ENDPOINT=${PROFILE_NAME}.net
         GROUP="${{ inputs.resource_group }}"
+        SUBSCRIPTION="${{ inputs.subscription_id}}"
         #  az cdn endpoint purge -g ${GROUP} -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'
-        echo "az cdn endpoint purge -g ${GROUP} -n ${ENDPOINT} --profile-name ${PROFILE_NAME} --content-paths '/*'"
+        echo "az cdn endpoint purge -g ${GROUP} -n ${ENDPOINT} --subscription ${SUBSCRIPTION} --profile-name ${PROFILE_NAME} --content-paths '/*'"

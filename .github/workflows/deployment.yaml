@@ -39,6 +39,7 @@ jobs:
   #         fi
   main:
     # needs: [ get-resource-group ]
+    environment: ${{ inputs.tier }}
     runs-on: ['ubuntu-20.04']
     steps:
       - run: echo "Starting..."

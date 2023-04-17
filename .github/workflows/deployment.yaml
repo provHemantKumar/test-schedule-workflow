@@ -51,32 +51,32 @@ jobs:
     steps:
       - run: echo "Starting..."
       - uses: actions/checkout@v3
-      - id: get-resource-group-name
-        name: Get Resource Group
-        if: ${{ inputs.use_purge }}
-        run: |
-          echo "${{ vars.ENVIRONMENT_STAGE }}"
-          echo ${{ vars.ENV_CONTEXT_VAR }}
-          if [ '${{ inputs.tier }}' == 'dev' ]
-          then
-            echo "::set-output name=resource_group::sps-dev"
-            echo "::set-output name=subscription_id::${{vars.RESOURCE_GROUP}}"
+      # - id: get-resource-group-name
+      #   name: Get Resource Group
+      #   if: ${{ inputs.use_purge }}
+      #   run: |
+      #     echo "${{ vars.ENVIRONMENT_STAGE }}"
+      #     echo ${{ vars.ENV_CONTEXT_VAR }}
+      #     if [ '${{ inputs.tier }}' == 'dev' ]
+      #     then
+      #       echo "::set-output name=resource_group::sps-dev"
+      #       echo "::set-output name=subscription_id::${{vars.RESOURCE_GROUP}}"
             
-          elif [ '${{ inputs.tier }}' == 'uat' ]
-          then
-            echo "::set-output name=resource_group::ssp-uat"
-            echo "::set-output name=subscription_id::${{vars.RESOURCE_GROUP}}"
+      #     elif [ '${{ inputs.tier }}' == 'uat' ]
+      #     then
+      #       echo "::set-output name=resource_group::ssp-uat"
+      #       echo "::set-output name=subscription_id::${{vars.RESOURCE_GROUP}}"
 
-          elif [ '${{ inputs.tier }}' == 'prod' ]
-          then
-            echo "set the output"
-            echo "::set-output name=resource_group::abc-production"
-            echo "::set-output name=subscription_id::${{vars.RESOURCE_GROUP}}"
-          fi
+      #     elif [ '${{ inputs.tier }}' == 'prod' ]
+      #     then
+      #       echo "set the output"
+      #       echo "::set-output name=resource_group::abc-production"
+      #       echo "::set-output name=subscription_id::${{vars.RESOURCE_GROUP}}"
+      #     fi
       - name: Purge CDN Endpoints
         if: ${{ inputs.use_purge }}
         uses: ./.github/workflows/actions/purge-cdn-endpoints
         with:
           tier: "${{inputs.tier}}"
-          resource_group: ${{steps.get-resource-group-name.outputs.resource_group}}
-          subscription_id: ${{steps.get-resource-group-name.outputs.subscription_id}}
+          resource_group: ${{ vars.RESOURCE_GROUP }}
+          subscription_id: ${{ vars.SUBSCRIPTION_ID }}

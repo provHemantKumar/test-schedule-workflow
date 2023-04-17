@@ -16,6 +16,13 @@ on:
           - uat
           - dev
           - prod
+      customer:
+        type: choice
+        description: "The customer tenant to deploy"
+        required: true
+        options:
+          - vvv
+          - ppp
 
 # We choose the runner-tags based on the customer
 jobs:
@@ -39,7 +46,7 @@ jobs:
   #         fi
   main:
     # needs: [ get-resource-group ]
-    environment: ${{ inputs.tier }}
+    environment: ${{inputs.customer}}-${{ inputs.tier }}
     runs-on: ['ubuntu-20.04']
     steps:
       - run: echo "Starting..."

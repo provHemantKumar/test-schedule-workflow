@@ -47,6 +47,8 @@ jobs:
         name: Get Resource Group
         if: ${{ inputs.use_purge }}
         run: |
+          echo ${{ vars.ENVIRONMENT_STAGE }}
+          echo ${{ vars.ENV_CONTEXT_VAR }}
           if [ '${{ inputs.tier }}' == 'dev' ]
           then
             echo "::set-output name=resource_group::sps-dev"

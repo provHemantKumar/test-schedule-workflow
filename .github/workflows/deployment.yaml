@@ -4,9 +4,9 @@ name: "Deployment pipeline"
 on:
   workflow_dispatch:
     inputs:
-      use-purge:
+      use_purge:
         type: boolean
-        description: If true, purge the cdn content.
+        description: Purge the cdn content.
         default: false
       tier:
         type: choice
@@ -45,7 +45,7 @@ jobs:
       - uses: actions/checkout@v3
       - id: get-resource-group-name
         name: Get Resource Group
-        if: ${{ ! github.event.inputs.use-purge }}
+        if: ${{ inputs.use_purge }}
         run: |
           if [ '${{ inputs.tier }}' == 'dev' ]
           then
@@ -60,7 +60,7 @@ jobs:
             echo "run the output"
           fi
       - name: Purge CDN Endpoints
-        if: ${{ ! github.event.inputs.use-purge }}
+        if: ${{ inputs.use_purge }}
         uses: ./.github/workflows/actions/purge-cdn-endpoints
         with:
           tier: "${{inputs.tier}}"

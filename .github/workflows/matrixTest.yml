@@ -38,7 +38,7 @@ jobs:
           run: |
             echo run the tcp command ${{matrix.node}}
             node=${{ matrix.node }}
-            current_time=$(date "+%Y-%m-%d-%H-%M-%S")
+            current_time=$(date "+%Y-%m-%d")
             blob_folder_name="$node"_"$current_time"
             echo folder name is : $blob_folder_name
           shell: bash

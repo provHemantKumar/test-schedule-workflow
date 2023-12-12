@@ -9,7 +9,7 @@ jobs:
     steps:
     - id: set-matrix
       run: |
-        nodes=(node1 node2 node3)
+        nodes=("node1" "node2" "node3")
         # # Create a JSON array from the node names
         # json_array="["
         # for node in "${nodes[@]}"; do

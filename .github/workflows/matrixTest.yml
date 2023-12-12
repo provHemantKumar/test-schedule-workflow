@@ -17,7 +17,6 @@ jobs:
         done
         json_array="${json_array%,}" # Remove the trailing comma
         json_array+="]"
-        echo "$json_array" > nodes.json
         echo "::set-output name=matrix::{\"node\":$json_array}"
   runAgainstMatrix:
     needs: setupMatrix

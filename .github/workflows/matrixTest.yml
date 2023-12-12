@@ -10,7 +10,7 @@ jobs:
     - id: set-matrix
       run: |
         nodes="node1 node2 node3"
-        echo "::set-output name=matrix::${nodes[@]}"
+        echo "::set-output name=matrix::[${nodes[@]}]"
   runAgainstMatrix:
     needs: setupMatrix
     runs-on: ubuntu-latest

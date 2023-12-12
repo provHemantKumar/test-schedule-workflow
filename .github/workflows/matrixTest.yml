@@ -1,6 +1,10 @@
 name: Matrix Test
 on: 
-    workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      restart_tcpdump:
+        description: 'Restart tcpdump command'
+        default: true
 jobs:
   setupMatrix:
     runs-on: ubuntu-latest
@@ -23,6 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJson(needs.setupMatrix.outputs.matrix) }}
+    
     steps:
         - name: Enter into the shell
           run: echo into the shell ${{matrix.node}}
@@ -35,4 +40,9 @@ jobs:
           
         - name: clean up the TCP logs
           run: echo clear the tcp logs ${{matrix.node}}
+          shell: bash
+        - name: Restart tcpdump
+          if: ${{ inputs.restart_tcpdump == 'true' }}
+          run: |
+            echo "Starting new process..."
           shell: bash

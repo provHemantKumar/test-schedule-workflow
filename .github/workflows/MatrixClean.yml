@@ -1,0 +1,28 @@
+name: Matrix Test
+on: 
+    workflow_dispatch
+jobs:
+  setupMatrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+    - id: set-matrix
+      run: |
+        nodes=(node1 node2 node3)
+        # # Create a JSON array from the node names
+        # json_array="["
+        # for node in "${nodes[@]}"; do
+        #   json_array+="\"$node\","
+        # done
+        # json_array="${json_array%,}" # Remove the trailing comma
+        # json_array+="]"
+        echo "::set-output name=nodes::${nodes[@]}"
+  runAgainstMatrix:
+    needs: setupMatrix
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ${{ needs.setupMatrix.outputs.nodes }}
+    steps:
+    - run: echo ${{matrix.node}}

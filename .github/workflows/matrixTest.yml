@@ -24,4 +24,15 @@ jobs:
     strategy:
       matrix: ${{ fromJson(needs.setupMatrix.outputs.matrix) }}
     steps:
-    - run: echo ${{matrix.node}}
+        - name: Enter into the shell
+          run: echo into the shell ${{matrix.node}}
+          
+          shell: bash
+          
+        - name: Run the TCP command
+          run: echo run the tcp command ${{matrix.node}}
+          shell: bash
+          
+        - name: clean up the TCP logs
+          run: echo clear the tcp logs ${{matrix.node}}
+          shell: bash

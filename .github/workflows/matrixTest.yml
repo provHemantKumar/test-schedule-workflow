@@ -13,6 +13,6 @@ jobs:
     needs: setupMatrix
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{fromJson(needs.setupMatrix.outputs.matrix)}}
+      matrix: ${{ steps.setupMatrix.outputs.matrix }}
     steps:
     - run: echo ${{ matrix.node }}

@@ -8,7 +8,9 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
     - id: set-matrix
-      run: echo "::set-output name=matrix::node1 node2 node3"
+      run: |
+        nodes="node1 node2 node3"
+        echo "::set-output name=matrix::${nodes[@]}"
   runAgainstMatrix:
     needs: setupMatrix
     runs-on: ubuntu-latest
